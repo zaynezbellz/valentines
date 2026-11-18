@@ -1,0 +1,447 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Chewy&family=DynaPuff:wght@400..700&family=Finger+Paint&family=Flavors&family=Freckle+Face&family=Fugaz+One&family=Handjet:wght,ELSH@100..900,2&family=Jersey+10&family=Jersey+25&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lilita+One&family=Love+Ya+Like+A+Sister&family=Lumanosimo&family=Pixelify+Sans:wght@400..700&family=Saira:ital,wght@0,100..900;1,100..900&family=Short+Stack&family=Sixtyfour:SCAN@-25&family=Walter+Turncoat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Chewy&family=DynaPuff:wght@400..700&family=Finger+Paint&family=Flavors&family=Freckle+Face&family=Fugaz+One&family=Handjet:wght,ELSH@100..900,2&family=Jersey+10&family=Jersey+25&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lilita+One&family=Love+Ya+Like+A+Sister&family=Lumanosimo&family=Mea+Culpa&family=Pixelify+Sans:wght@400..700&family=Saira:ital,wght@0,100..900;1,100..900&family=Short+Stack&family=Sixtyfour:SCAN@-25&family=Walter+Turncoat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Chewy&family=DynaPuff:wght@400..700&family=Finger+Paint&family=Flavors&family=Freckle+Face&family=Fugaz+One&family=Hanalei+Fill&family=Handjet:wght,ELSH@100..900,2&family=Jersey+10&family=Jersey+15&family=Jersey+25&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Lilita+One&family=Love+Ya+Like+A+Sister&family=Lumanosimo&family=Mea+Culpa&family=Pixelify+Sans:wght@400..700&family=Saira:ital,wght@0,100..900;1,100..900&family=Short+Stack&family=Sixtyfour:SCAN@-25&family=Walter+Turncoat&family=Workbench&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+html, body{
+    height: 100%;
+}
+body {
+    font-family: "Short Stack", cursive;
+    background: url(https://64.media.tumblr.com/e7c5254943149d2151ac9e2b38620d57/19692199f406449e-ac/s2048x3072/6eba758c93164709509c27d75d81a6b80b10fced.pnj);
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: none;
+    overflow: hidden;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+.cornerGif {
+    position: fixed; /* stays in place even when scrolling */
+    top: 0;
+    right: 0;
+    width: 150px;
+    margin: 10px;
+    transition: transform 0.5s ease;
+    border-radius: 50%;
+}
+    .cornerGif:hover{
+        transform: scale(1.2) rotate(3deg);
+    }
+
+    .score {
+        font-size: 4em;
+        margin-bottom: .5em;
+    }
+
+    .board {
+        background-image: url(https://64.media.tumblr.com/16796284e40799460f8c6fac72969824/cb83f4b72e27c4ba-9f/s1280x1920/be5c97aff4e83a62fad60fdf4f28c1027a88bc25.pnj);
+        background-size: cover;
+        padding: 50px;
+        height: 600px;
+        width: 600px;
+        border-radius: 20px;
+        border: 10px dashed pink;
+        box-shadow: 4px 4px 6px white;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 80px;
+    }
+
+    .hole {
+        position: relative;
+        margin: 5px;
+        background-color: #F29AAE;
+        border-radius: 50%;
+        /*inset: shadow INSIDE THE ELEMENT not OUTSIDE*/
+        box-shadow: inset 0 10px 0 7px #FB9B8F, inset 0 20px 20px 15px #FD7979, 0 0 5px white;
+        overflow: hidden;
+    }
+
+    .cursor {
+        z-index: 999;
+        height: 110px;
+        width: 100px;
+        position: fixed;
+        top: 100px;
+        left: 100px;
+        background-image: url(https://64.media.tumblr.com/debf51aec5c69c06f8459f05eafcc19d/0f7fffd8846f0895-40/s1280x1920/d13dfb1b0efd53da5ebcc7baf5d3cf907925a35f.pnj);
+        background-size: 100% 100%;
+        transform: translate(-20%, -20%);
+        pointer-events: none;
+    }
+
+    .hole .heart {
+        align-items: center;
+        width: 100%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+        animation: rise .5s ease-out;
+    }
+
+    @keyframes rise {
+        0% {
+            transform: translateX(-50%) translateY(100%);
+        }
+
+        100% {
+            transform: translateX(-50%) translateY(0);
+        }
+    }
+
+    .hole .bomb {
+        align-items: center;
+        width: 100%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+        animation: rise .5s ease-out;
+    }
+
+    @keyframes rise {
+        0% {
+            transform: translateX(-50%) translateY(100%);
+        }
+
+        100% {
+            transform: translateX(-50%) translateY(0);
+        }
+    }
+
+    #startScreen, #winRestartBtn {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    /* Envelope body */
+    .envelope, .envelope2 {
+        position: relative;
+        width: 480px;
+        height: 450px;
+        background-image: url(https://i.pinimg.com/736x/c1/fb/43/c1fb43f0fea0c5c8d8c218423ee899cb.jpg);
+        background-size: cover;
+        border-radius: 10px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        overflow: hidden;
+        transform-origin: bottom;
+        transition: transform 0.9s ease;
+    }
+
+        .envelope:hover {
+            transform: scale(1.2) rotate(2deg) translateY(-15px);
+            cursor: url(https://64.media.tumblr.com/315024bd049d0f7f13f7be151ed6091a/0f7fffd8846f0895-6d/s1280x1920/1eb1133344c47d6013a13ba4913ab6bcb2fa5406.pnj);
+        }
+    /* Top triangle flap */
+    .flap {
+        position: absolute;
+        width: 100%;
+        height: 280px;
+        background-image: url(https://i.pinimg.com/736x/23/f7/5a/23f75aade09b267338eabcf4fb638560.jpg);
+        background-size: cover;
+        clip-path: polygon(0 0, 50% 100%, 100% 0);
+        transform-origin: top;
+        transition: transform 0.6s ease-in;
+        z-index: 3;
+        display: flex; /* use flexbox */
+        justify-content: center; /* horizontal center */
+        align-items: center;
+    }
+    /* Letter */
+    .letter {
+        position: absolute;
+        bottom: -400px;
+        left: 5%;
+        width: 90%;
+        height: 85%;
+        background-image: url(https://i.pinimg.com/736x/67/a2/af/67a2af6017ac50a09da4721082abd376.jpg);
+        background-size: cover;
+        border-radius: 6px;
+        padding: 15px;
+        text-align: left;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        transition: transform 0.5s ease;
+    }
+
+    .envelope.open .flap {
+        transform: rotateX(180deg);
+    }
+
+    .envelope.open .letter {
+        transform: translateY(-440px) translateX(-20px);
+    }
+
+    .envelope, .envelope2 {
+        perspective: 1000px;
+    }
+
+    .flapText, .flapText2 {
+        color: black;
+        font-weight: bold;
+        font-size: 18px;
+        pointer-events: none; /* So clicks pass to flap */
+        user-select: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .tomy {
+        font-family: "Mea Culpa", cursive;
+    }
+
+    #playButton {
+        left: 150px;
+        position: relative;
+        display: flex;
+        background-image: url(https://i.pinimg.com/736x/d0/33/e8/d033e8a481f530c94a875a3e6cbc8c55.jpg);
+        background-size: cover;
+        color: white;
+        font-weight: bold;
+        font-size: 30px;
+        padding: 12px 28px;
+        cursor: none;
+        border: 2px dashed white;
+        box-shadow: 8px 10px 4px pink;
+        border-radius: 50px; /* fully rounded pill shape */
+        transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+        font-family: "Mea Culpa", cursive;
+    }
+
+        #playButton:hover {
+            background: #ff88c4; /* lighter pink on hover */
+            transform: scale(1.1); /* small pop effect */
+            box-shadow: 0 8px 20px rgba(255,110,180,0.4);
+            cursor: url(https://64.media.tumblr.com/315024bd049d0f7f13f7be151ed6091a/0f7fffd8846f0895-6d/s1280x1920/1eb1133344c47d6013a13ba4913ab6bcb2fa5406.pnj);
+        }
+
+    .scores {
+        font-family: "Jersey 15", sans-serif;
+        padding: 10px;
+        border-radius: 10%;
+        border: 7px solid white;
+        text-align: center;
+        display: flex;
+        margin: 10px;
+        width: 40%;
+        height: 8%;
+        background-image: url(https://i.pinimg.com/736x/30/ba/7f/30ba7f94c36127f33230d3bac5ca944e.jpg);
+        background-size: cover;
+    }
+
+
+
+
+
+
+
+    .envelope2 {
+        position: relative;
+        width: 580px;
+        height: 630px;
+        background-image: url(https://i.pinimg.com/736x/cd/4a/21/cd4a217a4454b2b2ba9250afbfc02c2a.jpg);
+        background-size: cover;
+        border-radius: 10px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        overflow: hidden;
+        transform-origin: bottom;
+        transition: transform 0.9s ease;
+    }
+
+    .flap2 {
+        position: relative;
+        width: 100%;
+        height: 320px;
+        background-image: url(https://i.pinimg.com/1200x/24/82/0f/24820f324190e013fe7edeb76f67b151.jpg);
+        background-size: cover;
+        clip-path: polygon(0 0, 50% 100%, 100% 0);
+        transform-origin: top;
+        transition: transform 0.6s ease-in;
+        z-index: 3;
+        display: flex; /* use flexbox */
+        justify-content: center; /* horizontal center */
+        align-items: center;
+    }
+
+    .envelope2.open .flap2 {
+        transform: rotateX(180deg);
+    }
+
+    .envelope2.open .letter2 {
+        transform: translateY(-550px) translateX(-20px);
+    }
+
+    .envelope2:hover {
+        transform: scale(0.9) rotate(-1deg);
+        cursor: url(https://64.media.tumblr.com/315024bd049d0f7f13f7be151ed6091a/0f7fffd8846f0895-6d/s1280x1920/1eb1133344c47d6013a13ba4913ab6bcb2fa5406.pnj);
+    }
+
+    .letter2 {
+        z-index: 8;
+        padding: 5px;
+        position: absolute;
+        bottom: -540px;
+        left: 5%;
+        width: 90%;
+        height: 85%;
+        font-size: 15px;
+        background-image: url(https://i.pinimg.com/736x/67/a2/af/67a2af6017ac50a09da4721082abd376.jpg);
+        background-size: cover;
+        border-radius: 6px;
+        text-align: left;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        transition: transform 0.5s ease;
+    }
+
+    #winRestartBtn {
+        left: 150px;
+        position: relative;
+        display: flex;
+        background-image: url(https://i.pinimg.com/736x/d0/33/e8/d033e8a481f530c94a875a3e6cbc8c55.jpg);
+        background-size: cover;
+        color: white;
+        font-weight: bold;
+        font-size: 30px;
+        padding: 12px 28px;
+        cursor: none;
+        border: 2px dashed white;
+        box-shadow: 8px 10px 4px pink;
+        border-radius: 50px; /* fully rounded pill shape */
+        transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+        font-family: "Mea Culpa", cursive;
+    }
+
+        #winRestartBtn:hover {
+            background: #ff88c4; /* lighter pink on hover */
+            transform: scale(1.1); /* small pop effect */
+            box-shadow: 0 8px 20px rgba(255,110,180,0.4);
+            cursor: url(https://64.media.tumblr.com/315024bd049d0f7f13f7be151ed6091a/0f7fffd8846f0895-6d/s1280x1920/1eb1133344c47d6013a13ba4913ab6bcb2fa5406.pnj);
+        }
+
+    .answers {
+        display: flex;
+        gap: 15px;
+        animation: risez 0.5s ease-in;
+        flex-wrap: wrap;
+    }
+
+    #yesBtn {
+        text-align: center;
+        position: relative;
+        display: flex;
+        background-image: url(https://i.pinimg.com/736x/ed/05/25/ed0525d5f947cbbe95651b103df486d6.jpg);
+        background-size: cover;
+        color: black;
+        font-weight: bold;
+        font-size: 40px;
+        padding: 12px 28px;
+        cursor: none;
+        border: 2px dashed black;
+        box-shadow: 8px 10px 4px pink;
+        border-radius: 50px; /* fully rounded pill shape */
+        transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+        font-family: "Short Stack", cursive;
+    }
+
+        #yesBtn:hover {
+            background: #b6ff00; /* lighter pink on hover */
+            transform: scale(1.1); /* small pop effect */
+            box-shadow: 0 8px 20px rgba(255,110,180,0.4);
+        }
+
+    #noBtn {
+        text-align: center;
+        transition: all 0.3s ease;
+        position: absolute;
+        display: flex;
+        background-image: url(https://i.pinimg.com/736x/d9/55/e4/d955e4419c9f98a25796a8a76db93455.jpg);
+        background-size: cover;
+        color: white;
+        font-weight: bold;
+        font-size: 30px;
+        padding: 12px 28px;
+        cursor: none;
+        border: 2px dashed white;
+        box-shadow: 8px 10px 4px pink;
+        border-radius: 50px; /* fully rounded pill shape */
+        transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+        font-family: "Short Stack", cursive;
+    }
+
+        #noBtn:hover {
+            background: red; /* lighter pink on hover */
+            transform: scale(1.1); /* small pop effect */
+            box-shadow: 0 8px 20px rgba(255,110,180,0.4);
+        }
+
+    .typing {
+        font-size: 40px;
+        font-family: "Mea Culpa", cursive;
+        text-align: center;
+        width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        border-right: 2px solid black;
+        animation: typing 4s steps(40) forwards, blink 1s infinite;
+    }
+
+    @keyframes typing {
+        from {
+            width: 0
+        }
+
+        to {
+            width: 100%
+        }
+    }
+
+    #gameOverScreen {
+        padding: 30px;
+        width: 50%;
+        height: 20%;
+        background-color: white;
+        text-align: center;
+        justify-content: center;
+        display: flex;
+        position: relative;
+        border: 3px solid pink;
+        box-shadow: 3px 0px 5px white;
+    }
+
+    #restartBtn {
+        left: 190px;
+        position: relative;
+        display: flex;
+        background-image: url(https://i.pinimg.com/736x/3f/20/48/3f20486cf638c16212520d2d6e1045fb.jpg);
+        background-size: cover;
+        color: white;
+        font-weight: bold;
+        font-size: 30px;
+        padding: 12px 28px;
+        cursor: none;
+        border: 2px dashed white;
+        box-shadow: 8px 10px 4px pink;
+        border-radius: 50px; /* fully rounded pill shape */
+        transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+        font-family: "Mea Culpa", cursive;
+    }
+
+        #restartBtn:hover {
+            background: #ff88c4; /* lighter pink on hover */
+            transform: scale(1.1); /* small pop effect */
+            box-shadow: 0 8px 20px rgba(255,110,180,0.4);
+            cursor: url(https://64.media.tumblr.com/315024bd049d0f7f13f7be151ed6091a/0f7fffd8846f0895-6d/s1280x1920/1eb1133344c47d6013a13ba4913ab6bcb2fa5406.pnj);
+        }

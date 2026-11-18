@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="https://64.media.tumblr.com/7bdc610d6cebc9717f83749912eafb01/4388f8ea6631bbf4-a7/s500x750/3157a7973f88fe8cb75bf624529cbc23986a5862.pnj">
+    <title>Whack-My-Heart!</title>
+    <link rel="stylesheet" href="stylesheetlove.css" />
+    <style>
+        .heart-container {
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            color: white;
+            position: absolute;
+            font-size: 24px;
+            opacity: 1;
+            animation: floatUp 5s ease forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-1000px); /* moves up */
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img src="giffinal.gif" class="cornerGif" alt="gif">
+
+    <div id="startScreen" style="text-align:center; margin-top:50px;">
+        <div class="envelope" id="envelope">
+            <div class="flap"><span class="flapText">Open ME!</span></div>
+            <div class="letter">
+                <h1 class="tomy">To my Player, </h1>
+                <p>
+                    Hello! long time no see, it's been too long. Welcome to <strong>Whack-My-Heart</strong>, a valentine-themed mini-game, where - technically, you catch my heart before it's too late ^^
+                    <br /><br />Your goal here is to get a total of <i>100 points </i> and receive the 'Golden Question'. Be careful of <strong>bombs, they might shatter my heart into pieces!</strong> <br /><br /> Goodluck!
+                </p>
+                <hr />
+                <br />
+                <button id="playButton">Play!</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="gameOverScreen" style="display: none;">
+        <h1 id="gameover"></h1>
+        <p>Final Score: <span id="finalScore"></span></p>
+        <br />
+        <hr />
+        <br />
+        <button id="restartBtn">Give me another chance!</button>
+    </div>
+
+    <div id="winScreen" style="display:none;">
+        <div class="envelope2" id="envelope2">
+            <div class="flap2"><span class="flapText2">Open ME!</span></div>
+            <div class="letter2">
+                <h1 class="tomy">Congratulations! </h1>
+                <p>You managed to catch all of the hearts before they disappeared! Your courage is unwavering and impressive, I can't thank you enough! <br /> One more question I wanted to ask before you go,</p> <br />
+                <p class="typing" id="question"> ‿₊୨  Will you be my Valentine?ᰔ ₊‿ </p>
+                <hr />
+                <br />
+                <div class="answers">
+                    <button id="yesBtn">Yes!</button>
+                    <button id="noBtn">No thanks...</button>
+                </div>
+                <br />
+                <br />
+                <button id="winRestartBtn" style="display:none;">Play Again?</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="gameBoard" style="display:none">
+        <div class="scores">
+            <h1 class="score">SCORE: <span>0</span></h1>
+        </div>
+        <div class="board">
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+        </div>
+    </div>
+    <div class="cursor"></div>
+    <div class="heart-container"></div>
+
+    <script src="javascriptlove.js"></script>
+    <script>
+        const bgm = new Audio("bgm-free-music.mp3");
+        bgm.loop = true;
+        bgm.volume = 0; // start silent
+        const maxVolume = 0.3;
+
+        let musicStarted = false; // flag to make sure it only starts once
+
+        // Listen for the first click anywhere
+        window.addEventListener('click', function startMusic() {
+            if (musicStarted) return; // only once
+            musicStarted = true;
+
+            // Try to play the music
+            bgm.play().catch(err => console.log("Audio blocked:", err));
+
+            // Fade in
+            const fadeDuration = 4000; // 4 seconds fade-in
+            const stepTime = 50;
+            const steps = fadeDuration / stepTime;
+            const volumeStep = maxVolume / steps;
+
+            const fadeIn = setInterval(() => {
+                if (bgm.volume < 1) {
+                    bgm.volume = Math.min(bgm.volume + volumeStep, maxVolume);
+                } else {
+                    clearInterval(fadeIn);
+                }
+            }, stepTime);
+        });
+        const heartContainer = document.querySelector('.heart-container');
+
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.textContent = '❤︎'; // simple heart emoji
+
+            // random horizontal position across screen
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+
+            // random size
+            heart.style.fontSize = (20 + Math.random() * 20) + 'px';
+            // random duration
+            heart.style.animationDuration = (2 + Math.random() * 6) + 's';
+
+            heartContainer.appendChild(heart);
+
+            // remove after animation ends
+            heart.addEventListener('animationend', () => heart.remove());
+        }
+
+        // Spawn a heart every 300ms
+        setInterval(createFloatingHeart, 100);
+    </script>
+</body>
+</html>
